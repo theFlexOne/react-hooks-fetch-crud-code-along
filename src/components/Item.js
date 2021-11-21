@@ -2,7 +2,7 @@ import React from 'react';
 
 const url = 'http://localhost:4000/items/';
 
-function Item({ item, onItemUpdate }) {
+function Item({ item, onItemUpdate, removeFromList }) {
   const addToCart = () => {
     // console.log(item);
     const options = {
@@ -17,7 +17,7 @@ function Item({ item, onItemUpdate }) {
   const deleteItem = () => {
     fetch(url + item.id, { method: 'DELETE' })
       .then(res => res.json())
-      .then(deletedItem => console.log(deletedItem));
+      .then(() => removeFromList(item.id));
   };
 
   return (

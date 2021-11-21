@@ -27,6 +27,15 @@ function ShoppingList() {
     );
   };
 
+  const onItemDelete = id => {
+    setItems(
+      items.filter(item => {
+        if (item.id === id) return false;
+        return true;
+      })
+    );
+  };
+
   const itemsToDisplay = items.filter(item => {
     if (selectedCategory === 'All') return true;
 
@@ -50,7 +59,12 @@ function ShoppingList() {
       />
       <ul className="Items">
         {itemsToDisplay.map(item => (
-          <Item key={item.id} item={item} onItemUpdate={onItemUpdate} />
+          <Item
+            key={item.id}
+            item={item}
+            onItemUpdate={onItemUpdate}
+            removeFromList={onItemDelete}
+          />
         ))}
       </ul>
     </div>
