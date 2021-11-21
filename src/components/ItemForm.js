@@ -4,8 +4,25 @@ function ItemForm({ onNewItemSubmit }) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('Produce');
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    const url = 'http://localhost:4000/items';
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        category,
+        isInCart: false,
+      }),
+    };
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => onNewItemSubmit(data));
+  };
+
   return (
-    <form className="NewItem" onSubmit={onNewItemSubmit}>
+    <form className="NewItem" onSubmit={handleSubmit}>
       <label>
         Name:
         <input

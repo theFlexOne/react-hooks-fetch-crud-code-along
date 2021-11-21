@@ -13,9 +13,18 @@ function ShoppingList() {
     setSelectedCategory(category);
   }
 
-  const handleNewItemSubmit = item => {
-    // const options
-    // fetch(url, options)
+  const onNewItemSubmit = newItem => {
+    setItems([...items, newItem]);
+  };
+
+  const onItemUpdate = updatedItem => {
+    setItems(
+      items.map(item => {
+        if (item.id !== updatedItem.id) return item;
+        item.isInCart = updatedItem.isInCart;
+        return item;
+      })
+    );
   };
 
   const itemsToDisplay = items.filter(item => {
@@ -34,14 +43,14 @@ function ShoppingList() {
 
   return (
     <div className="ShoppingList">
-      <ItemForm />
+      <ItemForm onNewItemSubmit={onNewItemSubmit} />
       <Filter
         category={selectedCategory}
         onCategoryChange={handleCategoryChange}
       />
       <ul className="Items">
         {itemsToDisplay.map(item => (
-          <Item key={item.id} item={item} />
+          <Item key={item.id} item={item} onItemUpdate={onItemUpdate} />
         ))}
       </ul>
     </div>
